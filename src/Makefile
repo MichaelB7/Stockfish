@@ -586,6 +586,20 @@ ifeq ($(KERNEL),Linux)
 		CXXFLAGS += -DUSE_MADVISE_HUGEPAGE
 	endif
 endif
+
+### strip executable
+ifeq ($(COMP), ndk)
+	ifeq ($(ARCH),armv7-a)
+		SUB_DIR=arm-linux-androideabi
+	endif
+	ifeq ($(ARCH),armv8-a)
+		SUB_DIR=aarch64-linux-android
+	endif
+	STRIP=$(NDK)/toolchains/llvm/prebuilt/$(HOST)/$(SUB_DIR)/bin/strip
+else
+	STRIP=strip
+endif
+
 ### ==========================================================================
 ### Section 4. Public targets
 ### ==========================================================================
@@ -652,11 +666,11 @@ $(directory):
 
 build: config-sanity
 	@$(MAKE) ARCH=$(ARCH) COMP=$(COMP) all
-	@strip $(EXE)
-#	@cp $(EXE) /Users/michaelbyrne/cluster.mfb
-#	@$(EXE) bench >/dev/null
-#	@wait
+	@$(STRIP) $(EXE)
 	@rm -f *.o syzygy/*.o
+ifneq ($(OUT_DIR),)
+	@mv $(EXE) $(OUT_DIR)
+endif
 
 profile-build: config-sanity objclean profileclean
 	@echo ""
@@ -686,7 +700,7 @@ profile-build: config-sanity objclean profileclean
 	@echo ""
 
 strip:
-	strip $(EXE)
+	$(STRIP) $(EXE)
 
 install:
 	-mkdir -p -m 755 $(BINDIR)
