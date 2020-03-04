@@ -578,7 +578,7 @@ ifeq ($(OS), Android)
 endif
 ifeq ($(ARCH), $(filter $(ARCH), armv7-a armv8-a))
 	CXXFLAGS += -fPIE
-	LDFLAGS += -pie
+	LDFLAGS += -fPIE -pie
 endif
 ### 3.10 madvise + transparent huge pages
 ifeq ($(KERNEL),Linux)
