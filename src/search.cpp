@@ -273,7 +273,7 @@ void MainThread::search() {
     minOutput           = Options["Minimal_Output"];
     tactical            = Options["Tactical"];
     uci_elo             = Options["Engine_Elo"];
-    uci_sleep           = Options["UCI_Sleep"];
+    uci_sleep           = Options["Sleep"];
 
 
 #endif
