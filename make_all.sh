@@ -47,7 +47,7 @@ while [[ $# -gt 0 ]]; do
             NDK=$(readlink -m "$2")
             shift
             ;;
-        -o|-out)
+        -o|--out)
             OUT=$(readlink -m "$2")
             shift
             ;;
